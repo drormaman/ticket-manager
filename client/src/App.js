@@ -6,25 +6,44 @@ function App() {
   const [tickets, setTickets] = useState([]);
   const [inputText, setInputText] = useState('');
   useEffect(() => {
-    fetch('/api/tickets').then(res => res.json()).then(data => setTickets(data))
-  },[])
+	(async () => {
+		const response = await fetch('/api/tickets');
+		const ticketsData = await response.json();
+		setTickets(ticketsData)
+  })();
+  }, []);
 
-useEffect(() => {
-  fetch(`/api/tickets?searchText=${inputText}`).then(res => res.json()).then(data => setTickets(data))
-},[inputText])
+  useEffect(() => {
+	(async () => {
+		const response = await fetch(`/api/tickets?searchText=${inputText}`);
+		const ticketsData = await response.json();
+		setTickets(ticketsData)
+	})();
+  }, [inputText]);
 
+  function onHideTicketClick(id) {
+	const newTickets = tickets.map((ticket, index) => {
+		if(ticket.id === id){
+			ticket.hide = true;
+			return ticket;
+		} 
+		return ticket;
+	});
+	setTickets(newTickets);
+  }
+  
   return (
-    <div>
-    <input type="text" id="searchInput" value={inputText} onChange={({target}) => setInputText(target.value)} />
-    {tickets.map(ticket => 
-      <Ticket key={ticket.id} ticket={ticket} />
-    )}
-    </div>
+    <>
+      <input
+        type="text"
+        id="searchInput"
+        value={inputText}
+        onChange={({ target }) => setInputText(target.value)}
+      />
+      {tickets.filter(ticket => !ticket.hide)
+	 		  .map(ticket => <Ticket key={ticket.id} ticket={ticket} onHideClick={onHideTicketClick} />)}
+    </>
   );
 }
 
 export default App;
-
-
-
-    
