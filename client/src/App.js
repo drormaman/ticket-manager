@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Ticket from './components/Ticket';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import TextField from '@material-ui/core/TextField';
+
 import './App.css';
 
 function App() {
@@ -45,18 +49,27 @@ function App() {
   }
   
   return (
-    <>
-      <input
-        type="text"
-        id="searchInput"
-        value={inputText}
-        onChange={({ target }) => setInputText(target.value)}
-      />
-	  <span id="hideTicketsCounter">{hiddenTicketsId.length}</span>
+    <div className="app">
+		<Header />
+		<div id="searchDiv">
+		<TextField 
+			id="searchInput" 
+			label="Search ticket" 
+			type="search" 
+			value={inputText}	
+			onChange={({ target }) => setInputText(target.value)}
+		/>
+		<span id="hideTicketsCounter">{hiddenTicketsId.length}</span>
 	  <button id="restoreHideTickets" onClick={onRestoreHiddenClick} >restore hidden tickets</button>
+		</div>
+
+	  <main>
+	  
       {tickets.filter(ticket => !ticket.hide)
 	 		  .map(ticket => <Ticket key={ticket.id} ticket={ticket} onHideClick={onHideTicketClick} />)}
-    </>
+			   </main>
+	<Footer />
+	</div>
   );
 }
 

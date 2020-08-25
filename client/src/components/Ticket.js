@@ -11,11 +11,11 @@ function Ticket(props) {
       <span>{userEmail}</span>
       <span>{creationTime}</span>
       {labels
-            && (
+            ? (
               <div>
                 {labels.map((label) => <span className="label" key={label}>{label}</span>)}
               </div>
-            )}
+            ) : undefined}
       {/* <p>{done}</p> */}
       <button type="button" className="hideTicketButton" onClick={() => props.onHideClick(id)} >Hide</button>
     </div>
