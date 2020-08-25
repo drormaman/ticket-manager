@@ -23,14 +23,24 @@ function App() {
   }, [inputText]);
 
   function onHideTicketClick(id) {
+	setHiddenTicketsId([...hiddenTicketsId, id]);
 	const newTickets = tickets.map((ticket) => {
 		if(ticket.id === id){
 			ticket.hide = true;
-			return ticket;
 		} 
 		return ticket;
 	});
-	setHiddenTicketsId([...hiddenTicketsId, id]);
+	setTickets(newTickets);
+  }
+
+  function onRestoreHiddenClick() {
+	setHiddenTicketsId([]);
+	const newTickets = tickets.map((ticket) => {
+		if(ticket.hide){
+			delete ticket.hide
+		} 
+		return ticket;
+	});
 	setTickets(newTickets);
   }
   
@@ -43,6 +53,7 @@ function App() {
         onChange={({ target }) => setInputText(target.value)}
       />
 	  <span id="hideTicketsCounter">{hiddenTicketsId.length}</span>
+	  <button id="restoreHideTickets" onClick={onRestoreHiddenClick} >restore hidden tickets</button>
       {tickets.filter(ticket => !ticket.hide)
 	 		  .map(ticket => <Ticket key={ticket.id} ticket={ticket} onHideClick={onHideTicketClick} />)}
     </>
