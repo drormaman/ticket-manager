@@ -4,6 +4,7 @@ import './App.css';
 
 function App() {
   const [tickets, setTickets] = useState([]);
+  const [hiddenTicketsId, setHiddenTicketsId] = useState([]);
   const [inputText, setInputText] = useState('');
   useEffect(() => {
 	(async () => {
@@ -17,18 +18,19 @@ function App() {
 	(async () => {
 		const response = await fetch(`/api/tickets?searchText=${inputText}`);
 		const ticketsData = await response.json();
-		setTickets(ticketsData)
+		setTickets(ticketsData.filter(ticket => !hiddenTicketsId.includes(ticket.id)))
 	})();
   }, [inputText]);
 
   function onHideTicketClick(id) {
-	const newTickets = tickets.map((ticket, index) => {
+	const newTickets = tickets.map((ticket) => {
 		if(ticket.id === id){
 			ticket.hide = true;
 			return ticket;
 		} 
 		return ticket;
 	});
+	setHiddenTicketsId([...hiddenTicketsId, id]);
 	setTickets(newTickets);
   }
   
@@ -40,6 +42,7 @@ function App() {
         value={inputText}
         onChange={({ target }) => setInputText(target.value)}
       />
+	  <span id="hideTicketsCounter">{hiddenTicketsId.length}</span>
       {tickets.filter(ticket => !ticket.hide)
 	 		  .map(ticket => <Ticket key={ticket.id} ticket={ticket} onHideClick={onHideTicketClick} />)}
     </>
