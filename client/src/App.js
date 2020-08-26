@@ -64,7 +64,6 @@ function App() {
 		</div>
 
 	  <main>
-	  
       {tickets.filter(ticket => !ticket.hide)
 	 		  .map(ticket => <Ticket key={ticket.id} ticket={ticket} onHideClick={onHideTicketClick} />)}
 			   </main>
