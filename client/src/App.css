@@ -33,7 +33,6 @@ header h1{
 #restoreHideTickets:hover{
     cursor: pointer;
     font-weight: 500;
-
 }
 
 main{
@@ -47,7 +46,6 @@ main{
 
 .ticket{
     background-color: #fff;
-    /* border: 2px solid black; */
     overflow: hidden;
     padding: 15px;
     display: flex;
@@ -67,6 +65,7 @@ main{
     justify-content: space-between;
     align-items: flex-start;
 }
+
 .ticket h5{
     margin:0 0 4px 0;
 }
@@ -87,9 +86,9 @@ main{
     color: #0077c2;
     font-weight: 500;
 }
+
 .expandContent:hover{
     color: #42a5f5;
-    
 }
 
 .ticket footer{
@@ -105,8 +104,4 @@ main{
     margin-left: 8px;
     font-size: 14px;
     padding: 2px 5px;
-}
-
-footer{
-
 }
