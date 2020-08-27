@@ -12,26 +12,17 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      // try{
         const response = await fetch('/api/tickets');
         const ticketsData = await response.json();
         setTickets(ticketsData);
-      // }catch(error){
-      //   alert('Somthing went wrong \n' + error)
-      // }
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      // try{
         const response = await fetch(`/api/tickets?searchText=${inputText}`);
       const ticketsData = await response.json();
       setTickets(ticketsData.filter((ticket) => !hiddenTicketsId.includes(ticket.id)));
-      // } catch(error) {
-      //   alert('Somthing went wrong \n' + error)
-      // }
-      
     })();
   }, [inputText]);
 
