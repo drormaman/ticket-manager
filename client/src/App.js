@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Ticket from './components/Ticket';
 import Header from './components/Header';
-import Footer from './components/Footer';
 
 import './App.css';
 
@@ -10,19 +9,29 @@ function App() {
   const [tickets, setTickets] = useState([]);
   const [hiddenTicketsId, setHiddenTicketsId] = useState([]);
   const [inputText, setInputText] = useState('');
+
   useEffect(() => {
     (async () => {
-      const response = await fetch('/api/tickets');
-      const ticketsData = await response.json();
-      setTickets(ticketsData);
+      try{
+        const response = await fetch('/api/tickets');
+        const ticketsData = await response.json();
+        setTickets(ticketsData);
+      }catch(error){
+        alert('Somthing went wrong \n' + error)
+      }
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`/api/tickets?searchText=${inputText}`);
+      try{
+        const response = await fetch(`/api/tickets?searchText=${inputText}`);
       const ticketsData = await response.json();
       setTickets(ticketsData.filter((ticket) => !hiddenTicketsId.includes(ticket.id)));
+      } catch(error) {
+        alert('Somthing went wrong \n' + error)
+      }
+      
     })();
   }, [inputText]);
 
@@ -59,15 +68,27 @@ function App() {
           value={inputText}
           onChange={({ target }) => setInputText(target.value)}
         />
-        <span id="hideTicketsCounter">{hiddenTicketsId.length}</span>
-        <button id="restoreHideTickets" onClick={onRestoreHiddenClick}>restore hidden tickets</button>
+        <div id="countersDiv">
+          <span>
+            Showing
+            {tickets.length - hiddenTicketsId.length}
+            {' '}
+            tickets
+          </span>
+          <span>
+            (
+            <span id="hideTicketsCounter">{hiddenTicketsId.length}</span>
+            {' '}
+            Hidden)
+          </span>
+          <span id="restoreHideTickets" onClick={onRestoreHiddenClick}>Restore hidden</span>
+        </div>
       </div>
 
       <main>
         {tickets.filter((ticket) => !ticket.hide)
           .map((ticket) => <Ticket key={ticket.id} ticket={ticket} onHideClick={onHideTicketClick} />)}
       </main>
-      <Footer />
     </div>
   );
 }

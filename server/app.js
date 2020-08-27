@@ -20,7 +20,7 @@ app.get('/api/tickets', async (req, res) => {
       res.send(ticketsArr);
     }
   } catch (error) {
-    console.log('error', error);
+    console.log('Error: ', error);
   }
 });
 
@@ -35,7 +35,7 @@ app.post('/api/tickets/:ticketId/done', async (req, res) => {
     });
     await fs.writeFile('./data.json', JSON.stringify(ticketsArr));
   } catch (error) {
-    console.log('error', error);
+    console.log('Error: ', error);
   } finally {
     res.send('updated: true');
   }

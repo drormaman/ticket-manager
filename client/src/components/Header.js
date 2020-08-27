@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header(props) {
+function Header() {
   return (
     <header id="mainHeader">
       <h1>Ticket Manager</h1>

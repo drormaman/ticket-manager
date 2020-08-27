@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -30,26 +30,37 @@ function Ticket(props) {
     setDone(false);
   }
 
-  const body = (
+  function addExpandButton() {
+    if (content.length > 250) {
+      return (
+        <>
+          <p className="ticketContent">
+            {`${content.slice(0, content.indexOf(' ', 250))} ... `}
+            <span className="expandContent" onClick={handleOpen}>see more</span>
+          </p>
+        </>
+      );
+    }
+    return <p className="ticketContent">{content}</p>;
+  }
+
+  const ticketBody = (
     <div className="ticket">
       <header>
         <div>
           <h5>{title}</h5>
           <span>
-            From:
+            {'From: '}
             <span className="userEmail">{userEmail}</span>
           </span>
-          {done && <CheckCircleIcon fontSize="small" color="primary" />}
+          {done && <div><CheckCircleIcon fontSize="small" color="primary" /></div>}
         </div>
-        {/* <div className="buttonsDiv"> */}
-        <ButtonGroup orientation="vertical" size="small" color="primary" style={{ color: '#0077c2' }} aria-label="text primary button group">
+        <ButtonGroup orientation="vertical" size="small" color="primary" style={{ width: 100 }} aria-label="text primary button group">
           <Button className="hideTicketButton" onClick={() => props.onHideClick(id)}>Hide</Button>
           {(done)
             ? <Button className="markTicketUndoneButton" onClick={markTicketUndone}>mark as Undone</Button>
             : <Button className="markTicketDoneButton" onClick={markTicketDone}>mark as Done</Button>}
         </ButtonGroup>
-
-        {/* </div> */}
       </header>
       <div>
         {addExpandButton()}
@@ -65,6 +76,7 @@ function Ticket(props) {
       </footer>
     </div>
   );
+
   const modalBody = (
     <div
       className="ticket"
@@ -79,11 +91,22 @@ function Ticket(props) {
       <header>
         <div>
           <h5>{title}</h5>
-          <span className="userEmail">{userEmail}</span>
+          <span>
+            {'From: '}
+            <span className="userEmail">{userEmail}</span>
+          </span>
+          {done && <div><CheckCircleIcon fontSize="small" color="primary" /></div>}
         </div>
-        <Button color="primary" className="hideTicketButton" onClick={() => props.onHideClick(id)}>Hide</Button>
+        <ButtonGroup orientation="vertical" size="small" color="primary" style={{ width: 100 }} aria-label="text primary button group">
+          <Button className="hideTicketButton" onClick={() => props.onHideClick(id)}>Hide</Button>
+          {(done)
+            ? <Button className="markTicketUndoneButton" onClick={markTicketUndone}>mark as Undone</Button>
+            : <Button className="markTicketDoneButton" onClick={markTicketDone}>mark as Done</Button>}
+        </ButtonGroup>
       </header>
-      <p>{content}</p>
+      <div>
+        {<p className="ticketContent">{content}</p>}
+      </div>
       <footer>
         <span className="ticketDate">{date.toDateString()}</span>
         {labels ? (
@@ -91,28 +114,13 @@ function Ticket(props) {
             {labels.map((label) => <span className="label" key={label}>{label}</span>)}
           </div>
         ) : undefined}
-        {/* <p>{done}</p> */}
       </footer>
     </div>
   );
 
-  function addExpandButton() {
-    if (content.length > 250) {
-      return (
-        <>
-          <p className="ticketContent">
-            {`${content.slice(0, content.indexOf(' ', 250))} ... `}
-            <span className="expandContent" onClick={handleOpen}>see more</span>
-          </p>
-        </>
-      );
-    }
-    return <p className="ticketContent">{content}</p>;
-  }
-
   return (
     <>
-      {body}
+      {ticketBody}
       <Modal
         open={modalOpen}
         onClose={handleClose}

@@ -13,7 +13,7 @@ const theme = createMuiTheme({
     },
     typography: {
         button:{
-            fontSize: "14px",
+            fontSize: "12px",
             lineHeight: "1."
         }
     }
