@@ -1,0 +1,107 @@
+#mainHeader{
+    height: 80px;
+    background-color: #0077c2;
+    text-align: center;
+}
+header h1{
+    line-height: 80px;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}
+
+#searchDiv{
+    padding: 10px 10vw;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+#countersDiv{
+    font-size: 14px;
+}
+
+#countersDiv>span{
+    margin-left: 10px;
+}
+
+#restoreHideTickets{
+    color: #0077c2;
+}
+#restoreHideTickets:hover{
+    cursor: pointer;
+    font-weight: 500;
+}
+
+main{
+    background-color: #f5f5f5;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-auto-rows: 300px;
+    grid-gap: 20px;
+}
+
+.ticket{
+    background-color: #fff;
+    overflow: hidden;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.4);
+}
+
+.ticket:hover{
+    border: 2px solid #0077c2;
+    padding: 13px;
+
+}
+
+.ticket header{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.ticket h5{
+    margin:0 0 4px 0;
+}
+
+.userEmail{
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.ticketDate{
+    font-size: 14px;
+}
+.ticketContent{
+    margin-bottom: 20px;
+}
+.expandContent{
+    cursor: pointer;
+    color: #0077c2;
+    font-weight: 500;
+}
+
+.expandContent:hover{
+    color: #42a5f5;
+}
+
+.ticket footer{
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label{
+    border-radius: 5px;
+    color: #fff;
+    background-color: #f59f5a;
+    margin-left: 8px;
+    font-size: 14px;
+    padding: 2px 5px;
+}
